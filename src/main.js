@@ -24,8 +24,11 @@ async function onSubmit(e) {
   searchQuery = e.currentTarget.elements.search.value.trim();
 
   try {
-    if (searchQuery === '') {
-      return;
+    if (!searchQuery) {
+      return iziToast.error({
+        position: 'topRight',
+        message: 'Please write something! ',
+      });
     }
     const response = await getImages(searchQuery, page);
 
