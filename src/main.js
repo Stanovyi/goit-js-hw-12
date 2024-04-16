@@ -6,8 +6,8 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 let page = 1;
-let lightbox;
-
+const lightbox = new SimpleLightbox('.images-list a');
+let searchQuery = null;
 const form = document.querySelector('.search-form');
 const input = document.querySelector('.search-form-input');
 const button = document.querySelector('.search-form-button');
@@ -20,8 +20,8 @@ buttonLoad.addEventListener('click', loadMoreImages);
 async function onSubmit(e) {
   e.preventDefault();
   showLoader();
-
-  const searchQuery = e.currentTarget.elements.search.value.trim();
+  page = 1;
+  searchQuery = e.currentTarget.elements.search.value.trim();
 
   try {
     const response = await getImages(searchQuery, page);
@@ -33,7 +33,7 @@ async function onSubmit(e) {
       });
     } else {
       list.innerHTML = createList(response.hits);
-      lightbox = new SimpleLightbox('.images-list a').refresh();
+      lightbox.refresh();
 
       if (response.totalHits > 15) {
         buttonLoad.classList.remove('is-hidden');
