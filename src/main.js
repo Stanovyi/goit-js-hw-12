@@ -34,7 +34,6 @@ async function onSubmit(e) {
     } else {
       list.innerHTML = createList(response.hits);
       lightbox.refresh();
-
       if (response.totalHits > 15) {
         buttonLoad.classList.remove('is-hidden');
       }
@@ -54,7 +53,6 @@ async function loadMoreImages() {
   page++;
 
   try {
-    const searchQuery = input.value.trim();
     const { hits, totalHits } = await getImages(searchQuery, page);
     list.insertAdjacentHTML('beforeend', createList(hits));
     lightbox.refresh();
