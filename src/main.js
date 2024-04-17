@@ -20,8 +20,18 @@ buttonLoad.addEventListener('click', loadMoreImages);
 async function onSubmit(e) {
   e.preventDefault();
   showLoader();
+  buttonLoad.classList.add('is-hidden');
+  list.innerHTML = '';
   page = 1;
   searchQuery = e.currentTarget.elements.search.value.trim();
+
+  if (!searchQuery) {
+    iziToast.warning({
+      position: 'topRight',
+      message: 'Please write something! ',
+    });
+    return;
+  }
 
   try {
     if (!searchQuery) {
@@ -56,6 +66,14 @@ async function onSubmit(e) {
 
 async function loadMoreImages() {
   showLoader();
+
+  if (!searchQuery) {
+    hiddeLoader();
+    return iziToast.error({
+      position: 'topRight',
+      message: 'Please enter a search query first!',
+    });
+  }
 
   page++;
 
