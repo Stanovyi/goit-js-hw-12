@@ -25,20 +25,13 @@ async function onSubmit(e) {
   page = 1;
   searchQuery = e.currentTarget.elements.search.value.trim();
 
-  if (!searchQuery) {
-    iziToast.warning({
-      position: 'topRight',
-      message: 'Please write something! ',
-    });
-    return;
-  }
-
   try {
     if (!searchQuery) {
-      return iziToast.error({
+      iziToast.warning({
         position: 'topRight',
         message: 'Please write something! ',
       });
+      return;
     }
     const response = await getImages(searchQuery, page);
 
@@ -66,14 +59,6 @@ async function onSubmit(e) {
 
 async function loadMoreImages() {
   showLoader();
-
-  if (!searchQuery) {
-    hiddeLoader();
-    return iziToast.error({
-      position: 'topRight',
-      message: 'Please enter a search query first!',
-    });
-  }
 
   page++;
 
